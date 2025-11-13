@@ -3,14 +3,17 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="style.css">
-    <title>Catálogo</title>
+    <link rel="stylesheet" href="./CSS/style.css">
+    <link rel="shortcut icon" href="./Imagens/favicon.ico" type="image/x-icon" sizes="32x32">
+    <title>CineWeb</title>
 </head>
 <body>
 
     <header class="header">
-        <img class="logotipo" src="./Imagens/logotipo.png" width="150">
-        <h1>Catálogo de Filmes e Séries</h1>
+        <div class="branding">
+            <img class="logotipo" src="./Imagens/logotipo.png" width="150">
+            <h1>CineWeb - Catálogo de Filmes e Séries</h1>
+        </div>
         <nav class="nav">
             <a href="#catalogo">Catálogo</a>
             <a href="#sobre">Sobre</a>
@@ -26,7 +29,7 @@
                 <select id="genero">
                     <option value="">Todos</option>
                     <option value="acao">Ação</option>
-                    <option value="comedio">Comédia</option>
+                    <option value="comedia">Comédia</option>
                     <!-- opcoes preenchidas dinamicamente via JS -->
                 </select>
             </form>
@@ -60,7 +63,7 @@
         
     </main>
 
-    <footer>
+    <footer class="footer">
         <div class="container-footer"> 
             <div class="secao-footer">
                 <h2>Autores</h2>
@@ -71,7 +74,7 @@
                 </ul>
             </div>
             
-            <p class="copy-footer">&copy; 2025 Catálogo de Filmes e Séries</p>
+            <p class="copy-footer">&copy; 2025 CineWeb - Catálogo de Filmes e Séries</p>
         </div>
     </footer>
 
