@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="./CSS/style.css">
+    <link rel="stylesheet" href="style.css">
     <link rel="shortcut icon" href="./Imagens/favicon.ico" type="image/x-icon" sizes="32x32">
     <title>CineWeb</title>
 </head>
@@ -11,7 +11,7 @@
 
     <header class="header">
         <div class="branding">
-            <img class="logotipo" src="./Imagens/logotipo.png" width="150">
+            <img class="logotipo" src="./Imagens/logotipo.png" width="150" alt="Logotipo">
             <h1>CineWeb - Catálogo de Filmes e Séries</h1>
         </div>
         <nav class="nav">
@@ -22,41 +22,37 @@
     </header>
 
     <main>
-        <section id="filtro" class="secao-filtro">
-            <h2>Filtrar por gênero:</h2>
-            <form class="filtro">
-                <label for="genero">Escolha o gênero: </label>
-                <select id="genero">
-                    <option value="">Todos</option>
-                    <option value="acao">Ação</option>
-                    <option value="comedia">Comédia</option>
+        <section class="filtros">
+            <form id="form-busca" class="form" method="get" novalidate>
+                <label for="filtro-titulo">Explore nosso catálogo:</label>
+                <div class="input-row">
+                    <input
+                    id="busca-titulo"
+                    name="busca-titulo"
+                    type="text"
+                    placeholder="Buscar por título..."
+                    required
+                    />
+                    <button id="btn-search" type="submit">Buscar</button>
+                </div>
+            </form>
+            <div>
+                <label for="filtro-genero">Filtrar por gênero:</label>
+                <select name="genero" id="genero">
                     <!-- opcoes preenchidas dinamicamente via JS -->
                 </select>
-            </form>
+            </div>
         </section>
 
         <section id="catalogo" class="secao-catalogo">
-            <h2>Catálogo</h2>
+            <h2>Lançamentos Recentes</h2>
             <div id="lista-filmes">
-                <article class="card-filme">
-                    <h3>Nome do Filme</h3>
-                    <p><strong>Data:</strong> xx/xx/xxxx</p>
-                    <p><strong>Gênero:</strong> Qualquer</p>
-                </article>
-                <article class="card-filme">
-                    <h3>Nome do Filme</h3>
-                    <p><strong>Data:</strong> xx/xx/xxxx</p>
-                    <p><strong>Gênero:</strong> Qualquer</p>
-                </article>
-                <article class="card-filme">
-                    <h3>Nome do Filme</h3>
-                    <p><strong>Data:</strong> xx/xx/xxxx</p>
-                    <p><strong>Gênero:</strong> Qualquer</p>
-                </article>
+                <p>Carregando filmes...</p>
+                <!--cards serao preenchidos dinamicamente pelo JS-->
             </div>
 
             <div id="paginacao">
-                <!--botoes de paginacao-->
+                <!--botoes de paginacao adicionados dinamicamente pelo JS-->
             </div>
 
         </section>
