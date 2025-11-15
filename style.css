@@ -198,3 +198,23 @@ body {
     font-size: 0.9rem;
     color: #333;
 }
+
+#detalhes-container {
+    max-width: 900px;
+    margin: 2rem auto;
+    padding: 1rem;
+    background: #fff;
+    border-radius: 12px;
+    box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+}
+
+.poster-detalhe {
+    width: 250px;
+    border-radius: 10px;
+    margin-bottom: 1rem;
+}
+
+.texto-curto {
+    max-height: 120px;
+    overflow: hidden;
+}

@@ -29,3 +29,17 @@ export async function buscarGeneros() {
     const res = await fetch(url);
     return await res.json();
 }
+
+// Buscar detalhes de um filme
+export async function buscarDetalhesFilme(id) {
+    const url = `${BASE_URL}/movie/${id}?api_key=${API_KEY}&language=pt-BR`;
+    const res = await fetch(url);
+    return await res.json();
+}
+
+// Buscar detalhes de uma série (inclui temporadas)
+export async function buscarDetalhesSerie(id) {
+    const url = `${BASE_URL}/tv/${id}?api_key=${API_KEY}&language=pt-BR`;
+    const res = await fetch(url);
+    return await res.json();
+}

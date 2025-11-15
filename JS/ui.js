@@ -23,7 +23,13 @@ export function mostrarFilmes(filmes) {
             <p><strong>Gêneros:</strong> ${converterGeneros(movie.genre_ids)}</p>
         `;
 
-        listaFilmes.appendChild(card);
+        const link = document.createElement("a");
+        link.href = `detalhes.html?id=${movie.id}&tipo=movie`;
+        link.style.textDecoration = "none"; // opcional
+        link.style.color = "inherit";       // opcional
+
+        link.appendChild(card);
+        listaFilmes.appendChild(link);
     });
 }
 
