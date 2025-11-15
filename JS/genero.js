@@ -22,7 +22,7 @@ export async function carregarGeneros() {
 }
 
 export function preencherSelectGeneros(select, lista) {
-    select.innerHTML = `<option value="">Todos</option>`; // ← VOLTA AQUI
+    select.innerHTML = `<option value="">Todos</option>`;
 
     lista.forEach(genero => {
         const option = document.createElement("option");

@@ -67,7 +67,7 @@ function renderizarDetalhes(dados) {
 
     container.innerHTML = html;
 
-    // LOGICA: mostrar mais / menos
+    // Mostrar mais / menos
     const texto = document.getElementById("sinopse");
 
     if (sinopse.length > 400) {

@@ -1,10 +1,8 @@
-// buscar.js
 import { buscarPorTitulo, buscarSeriesPorTitulo } from "./api.js";
 import { mostrarFilmes, atualizarTitulo } from "./ui.js";
 import { mostrarPaginacao } from "./paginacao.js";
 import { setModo, setBusca } from "./state.js";
 
-// Função reutilizável: executa a busca (fetch + render + paginação)
 export async function executarBusca(texto, pagina = 1) {
     setModo("busca");
     setBusca(texto);
@@ -29,7 +27,6 @@ export async function executarBusca(texto, pagina = 1) {
             return;
         }
 
-        // ordenar por popularidade
         combinados.sort((a, b) => (b.popularity || 0) - (a.popularity || 0));
 
         mostrarFilmes(combinados);
@@ -47,7 +44,6 @@ export async function executarBusca(texto, pagina = 1) {
     }
 }
 
-// Função que configura o formulário para usar executarBusca
 export function configurarBusca() {
     const formBusca = document.getElementById("form-busca");
     const inputBusca = document.getElementById("busca-titulo");

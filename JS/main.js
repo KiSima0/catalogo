@@ -1,4 +1,3 @@
-// main.js
 import { buscarLancamentos, buscarPorGenero, buscarSeriesPorGenero, buscarLancamentosSeries } from './api.js';
 import { carregarGeneros, preencherSelectGeneros } from './genero.js';
 import { mostrarFilmes, atualizarTitulo, tituloSecao } from './ui.js';
@@ -11,7 +10,6 @@ const filtroGenero = document.getElementById("genero");
 const formBusca = document.getElementById("form-busca");
 const inputBusca = document.getElementById("busca-titulo");
 
-// Carrega lançamentos iniciais (sem paginação)
 async function carregarLancamentosIniciais() {
     setModo("recentes");
     atualizarTitulo("Lançamentos recentes");
@@ -38,9 +36,7 @@ async function carregarLancamentosIniciais() {
     }
 }
 
-// Função que aplica o filtro por gênero e suporta paginação
 export async function aplicarFiltroGenero(idGenero, pagina = 1) {
-    // Se selecionar "Todos"
     if (!idGenero) {
         await carregarLancamentosIniciais();
         return;
@@ -79,33 +75,24 @@ export async function aplicarFiltroGenero(idGenero, pagina = 1) {
     }
 }
 
-// Inicialização
 async function start() {
-    // 1) carregar generos e preencher select
     const lista = await carregarGeneros();
     preencherSelectGeneros(filtroGenero, lista);
 
-    // preencherSelectGeneros já foi executado dentro de carregarGeneros (se sua função faz isso);
-    // se não, chame uma função que preenche; mas no seu caso, carregarGeneros retorna lista.
-    // Aqui garantimos que exista a opção "Todos" (se sua função não colocou, adicione)
     if (!document.getElementById("genero").querySelector('option[value=""]')) {
-        // cria opção "Todos" se não existir
         const opt = document.createElement("option");
         opt.value = "";
         opt.textContent = "Todos";
         filtroGenero.insertBefore(opt, filtroGenero.firstChild);
     }
 
-    // 2) evento do filtro: usa aplicarFiltroGenero
     filtroGenero.addEventListener("change", () => {
         const id = filtroGenero.value;
         aplicarFiltroGenero(id, 1);
     });
 
-    // 3) iniciar busca (configura o formulário)
     configurarBusca();
 
-    // 4) carregar lançamentos iniciais
     await carregarLancamentosIniciais();
 }
 

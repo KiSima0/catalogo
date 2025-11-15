@@ -34,8 +34,8 @@ export function mostrarFilmes(filmes, destino = listaFilmes) {
 
         const link = document.createElement("a");
         link.href = `detalhes.html?id=${item.id}&tipo=${item.tipo || "movie"}`;
-        link.style.textDecoration = "none"; // opcional
-        link.style.color = "inherit";       // opcional
+        link.style.textDecoration = "none";
+        link.style.color = "inherit";
 
         link.appendChild(card);
         listaFilmes.appendChild(link);
