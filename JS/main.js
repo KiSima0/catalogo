@@ -1,5 +1,5 @@
 // main.js
-import { buscarLancamentos, buscarPorGenero } from './api.js';
+import { buscarLancamentos, buscarPorGenero, buscarSeriesPorGenero, buscarLancamentosSeries } from './api.js';
 import { carregarGeneros, preencherSelectGeneros } from './genero.js';
 import { mostrarFilmes, atualizarTitulo, tituloSecao } from './ui.js';
 import { mostrarPaginacao, esconderPaginacao } from './paginacao.js';
@@ -17,9 +17,20 @@ async function carregarLancamentosIniciais() {
     atualizarTitulo("Lançamentos recentes");
 
     try {
-        const data = await buscarLancamentos(1);
-        const filtrados = (data.results || []).filter(f => f.release_date && f.release_date >= "2024-01-01");
-        mostrarFilmes(filtrados);
+        const [filmes, series] = await Promise.all([
+            buscarLancamentos(1),
+            buscarLancamentosSeries(1)
+        ]);
+
+        const combinados = [
+            ...(filmes.results || []).map(f => ({ ...f, tipo: "movie" })),
+            ...(series.results || []).map(s => ({ ...s, tipo: "tv" }))
+        ];
+
+        // ordenar por popularidade
+        combinados.sort((a, b) => (b.popularity || 0) - (a.popularity || 0));
+
+        mostrarFilmes(combinados);
         esconderPaginacao();
     } catch (err) {
         console.error("Erro ao carregar lançamentos:", err);
@@ -39,18 +50,29 @@ export async function aplicarFiltroGenero(idGenero, pagina = 1) {
     setGenero(idGenero);
 
     try {
-        const data = await buscarPorGenero(idGenero, pagina);
+        const [filmes, series] = await Promise.all([
+            buscarPorGenero(idGenero, pagina),
+            buscarSeriesPorGenero(idGenero, pagina)
+        ]);
 
-        // formatar os gêneros em cada filme para o UI usar (opcional)
-        (data.results || []).forEach(f => {
-            f.generosFormatados = converterGeneros(f.genre_ids || []);
-        });
+        const combinados = [
+            ...(filmes.results || []).map(f => ({ ...f, tipo: "movie" })),
+            ...(series.results || []).map(s => ({ ...s, tipo: "tv" }))
+        ];
+
+        combinados.sort((a, b) => (b.popularity || 0) - (a.popularity || 0));
 
         const nomeGenero = filtroGenero.options[filtroGenero.selectedIndex]?.text || "Gênero";
         atualizarTitulo(`Gênero: ${nomeGenero}`);
 
-        mostrarFilmes(data.results || []);
-        mostrarPaginacao(data.page, data.total_pages, (pg) => aplicarFiltroGenero(idGenero, pg));
+        mostrarFilmes(combinados);
+
+        const totalPaginas = Math.max(
+            filmes.total_pages || 1,
+            series.total_pages || 1
+        );
+
+        mostrarPaginacao(pagina, totalPaginas, (pg) => aplicarFiltroGenero(idGenero, pg));
     } catch (err) {
         console.error("Erro ao filtrar por gênero:", err);
         document.getElementById("lista-filmes").innerHTML = "<p>Erro ao filtrar por gênero.</p>";

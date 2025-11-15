@@ -1,15 +1,24 @@
-import { buscarGeneros } from './api.js';
+import { buscarGeneros, buscarGenerosSeries } from './api.js';
 
 export const generos = {};
 
 export async function carregarGeneros() {
-    const data = await buscarGeneros();
-    
-    data.genres.forEach(g => {
+    const [gFilmes, gSeries] = await Promise.all([
+        buscarGeneros(),
+        buscarGenerosSeries()
+    ]);
+
+    const juntos = [
+        ...(gFilmes.genres || []).map(g => ({ ...g, tipo: "movie" })),
+        ...(gSeries.genres || []).map(g => ({ ...g, tipo: "tv" }))
+    ];
+
+    // registrar no mapa
+    juntos.forEach(g => {
         generos[g.id] = g.name;
     });
 
-    return data.genres; // para preencher o select
+    return juntos;
 }
 
 export function preencherSelectGeneros(select, lista) {

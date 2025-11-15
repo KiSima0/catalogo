@@ -5,26 +5,35 @@ export const listaFilmes = document.getElementById("lista-filmes");
 export const tituloSecao = document.querySelector("#catalogo h2");
 
 // Criar card de filme
-export function mostrarFilmes(filmes) {
+export function mostrarFilmes(filmes, destino = listaFilmes) {
     listaFilmes.innerHTML = "";
 
-    filmes.forEach(movie => {
-        const imagem = movie.poster_path
-            ? `${IMG_BASE_URL}${movie.poster_path}`
+    filmes.forEach(item => {
+        const imagem = item.poster_path
+            ? `${IMG_BASE_URL}${item.poster_path}`
             : "https://placehold.co/300x450/333/fff?text=Sem+Imagem";
+
+        // Título correto (filme ou série)
+        const titulo = item.title || item.name || "Título indisponível";
+
+        // Data correta (filme ou série)
+        const data = item.release_date || item.first_air_date || "Não informado";
+
+        const tipoTexto = item.tipo === "tv" ? "📺 Série" : "🎬 Filme";
 
         const card = document.createElement("article");
         card.classList.add("card-filme");
 
         card.innerHTML = `
-            <img src="${imagem}" alt="${movie.title}">
-            <h3>${movie.title}</h3>
-            <p><strong>Data:</strong> ${movie.release_date || "Não informado"}</p>
-            <p><strong>Gêneros:</strong> ${converterGeneros(movie.genre_ids)}</p>
+            <img src="${imagem}" alt="${titulo}">
+            <h3>${titulo}</h3>
+            <p><strong>Tipo:</strong> ${tipoTexto}</p>
+            <p><strong>Data:</strong> ${data}</p>
+            <p><strong>Gêneros:</strong> ${converterGeneros(item.genre_ids || [])}</p>
         `;
 
         const link = document.createElement("a");
-        link.href = `detalhes.html?id=${movie.id}&tipo=movie`;
+        link.href = `detalhes.html?id=${item.id}&tipo=${item.tipo || "movie"}`;
         link.style.textDecoration = "none"; // opcional
         link.style.color = "inherit";       // opcional
 

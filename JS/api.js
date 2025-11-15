@@ -43,3 +43,31 @@ export async function buscarDetalhesSerie(id) {
     const res = await fetch(url);
     return await res.json();
 }
+
+// Buscar lançamentos de séries
+export async function buscarLancamentosSeries(pagina = 1) {
+    const url = `${BASE_URL}/tv/on_the_air?api_key=${API_KEY}&language=pt-BR&page=${pagina}`;
+    const res = await fetch(url);
+    return await res.json();
+}
+
+// Buscar séries pelo título
+export async function buscarSeriesPorTitulo(titulo, pagina = 1) {
+    const url = `${BASE_URL}/search/tv?api_key=${API_KEY}&query=${encodeURIComponent(titulo)}&language=pt-BR&page=${pagina}`;
+    const res = await fetch(url);
+    return await res.json();
+}
+
+// Buscar gêneros de séries
+export async function buscarGenerosSeries() {
+    const url = `${BASE_URL}/genre/tv/list?api_key=${API_KEY}&language=pt-BR`;
+    const res = await fetch(url);
+    return await res.json();
+}
+
+// Buscar séries por gênero
+export async function buscarSeriesPorGenero(idGenero, pagina = 1) {
+    const url = `${BASE_URL}/discover/tv?api_key=${API_KEY}&with_genres=${idGenero}&language=pt-BR&page=${pagina}`;
+    const res = await fetch(url);
+    return await res.json();
+}

@@ -1,5 +1,5 @@
 // buscar.js
-import { buscarPorTitulo } from "./api.js";
+import { buscarPorTitulo, buscarSeriesPorTitulo } from "./api.js";
 import { mostrarFilmes, atualizarTitulo } from "./ui.js";
 import { mostrarPaginacao } from "./paginacao.js";
 import { setModo, setBusca } from "./state.js";
@@ -12,19 +12,34 @@ export async function executarBusca(texto, pagina = 1) {
     atualizarTitulo(`Resultados para "${texto}"`);
 
     try {
-        const data = await buscarPorTitulo(texto, pagina);
+        const [filmes, series] = await Promise.all([
+            buscarPorTitulo(texto, pagina),
+            buscarSeriesPorTitulo(texto, pagina)
+        ]);
 
-        if (!data || !data.results || data.results.length === 0) {
+        const combinados = [
+            ...(filmes.results || []).map(f => ({ ...f, tipo: "movie" })),
+            ...(series.results || []).map(s => ({ ...s, tipo: "tv" }))
+        ];
+
+        if (combinados.length === 0) {
             document.getElementById("lista-filmes").innerHTML =
                 "<p>Nenhum resultado encontrado.</p>";
-            // Esconder paginação se não houver resultados
-            mostrarPaginacao(1, 1, () => {}); // opcional: poderia esconder
+            mostrarPaginacao(1, 1, () => {});
             return;
         }
 
-        // Renderiza e delega à paginação o callback correto
-        mostrarFilmes(data.results);
-        mostrarPaginacao(data.page, data.total_pages, (pg) => executarBusca(texto, pg));
+        // ordenar por popularidade
+        combinados.sort((a, b) => (b.popularity || 0) - (a.popularity || 0));
+
+        mostrarFilmes(combinados);
+
+        const totalPaginas = Math.max(
+            filmes.total_pages || 1,
+            series.total_pages || 1
+        );
+
+        mostrarPaginacao(pagina, totalPaginas, (pg) => executarBusca(texto, pg));
     } catch (err) {
         console.error("Erro na busca:", err);
         document.getElementById("lista-filmes").innerHTML =
