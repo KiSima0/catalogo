@@ -18,14 +18,3 @@ export function mostrarPaginacao(paginaAtual, totalPaginas, callback) {
 export function esconderPaginacao() {
     paginacao.style.display = "none";
 }
-
-export function mudarPagina(novaPagina) {
-
-    if (modoAtual === "genero") {
-        buscarPorGenero(ultimoGeneroSelecionado, novaPagina);
-    }
-
-    else if (modoAtual === "busca") {
-        buscarPorTitulo(ultimaBusca, novaPagina);
-    }
-}

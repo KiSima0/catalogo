@@ -1,4 +1,5 @@
 import { buscarDetalhesFilme, buscarDetalhesSerie, IMG_BASE_URL } from "./api.js";
+import { esconderSpinner, mostrarSpinner } from "./ui.js";
 
 // Capturar id e tipo da URL
 const params = new URLSearchParams(window.location.search);
@@ -9,6 +10,7 @@ const container = document.getElementById("detalhes-container");
 
 // Função principal
 async function carregarDetalhes() {
+    mostrarSpinner();
     container.innerHTML = "<p>Carregando detalhes...</p>";
 
     try {
@@ -17,12 +19,17 @@ async function carregarDetalhes() {
                 ? await buscarDetalhesFilme(id)
                 : await buscarDetalhesSerie(id);
 
+        if (dados.error) {
+            throw new Error(dados.message);
+        }
+
         renderizarDetalhes(dados);
 
     } catch (erro) {
         container.innerHTML = "<p>Erro ao carregar detalhes.</p>";
         console.error(erro);
     }
+    esconderSpinner();
 }
 
 // Função para renderizar tudo na tela

@@ -1,9 +1,10 @@
 import { buscarPorTitulo, buscarSeriesPorTitulo } from "./api.js";
-import { mostrarFilmes, atualizarTitulo } from "./ui.js";
+import { mostrarFilmes, atualizarTitulo, mostrarSpinner, esconderSpinner } from "./ui.js";
 import { mostrarPaginacao } from "./paginacao.js";
 import { setModo, setBusca } from "./state.js";
 
 export async function executarBusca(texto, pagina = 1) {
+    mostrarSpinner();
     setModo("busca");
     setBusca(texto);
 
@@ -38,10 +39,12 @@ export async function executarBusca(texto, pagina = 1) {
 
         mostrarPaginacao(pagina, totalPaginas, (pg) => executarBusca(texto, pg));
     } catch (err) {
-        console.error("Erro na busca:", err);
-        document.getElementById("lista-filmes").innerHTML =
-            "<p>Erro ao buscar. Tente novamente mais tarde.</p>";
+        if (filmes.error || series.error) {
+            throw new Error("API retornou erro");
+        }
+
     }
+    esconderSpinner(); //vai esconder o spinner
 }
 
 export function configurarBusca() {

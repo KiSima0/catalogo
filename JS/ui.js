@@ -29,7 +29,7 @@ export function mostrarFilmes(filmes, destino = listaFilmes) {
             <h3>${titulo}</h3>
             <p><strong>Tipo:</strong> ${tipoTexto}</p>
             <p><strong>Data:</strong> ${data}</p>
-            <p><strong>Gêneros:</strong> ${converterGeneros(item.genre_ids || [])}</p>
+            <p><strong>Gêneros:</strong> ${converterGeneros(item.genre_ids || []) || "Não informado"}</p>
         `;
 
         const link = document.createElement("a");
@@ -45,4 +45,13 @@ export function mostrarFilmes(filmes, destino = listaFilmes) {
 // Atualiza o título da seção
 export function atualizarTitulo(texto) {
     tituloSecao.textContent = texto;
+}
+
+//funcoes de spinner
+export function mostrarSpinner() {
+    document.getElementById("spinner-container").classList.remove("oculto");
+}
+
+export function esconderSpinner() {
+    document.getElementById("spinner-container").classList.add("oculto");
 }

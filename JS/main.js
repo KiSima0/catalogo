@@ -5,6 +5,7 @@ import { mostrarPaginacao, esconderPaginacao } from './paginacao.js';
 import { configurarBusca, executarBusca } from './buscar.js';
 import { setModo, setGenero } from './state.js';
 import { converterGeneros } from './genero.js';
+import { mostrarSpinner, esconderSpinner } from './ui.js';
 
 const filtroGenero = document.getElementById("genero");
 const formBusca = document.getElementById("form-busca");
@@ -15,10 +16,15 @@ async function carregarLancamentosIniciais() {
     atualizarTitulo("Lançamentos recentes");
 
     try {
+        mostrarSpinner();
         const [filmes, series] = await Promise.all([
             buscarLancamentos(1),
             buscarLancamentosSeries(1)
         ]);
+
+        if (filmes.error || series.error) {
+            throw new Error("Falha na API");
+        }
 
         const combinados = [
             ...(filmes.results || []).map(f => ({ ...f, tipo: "movie" })),
@@ -33,6 +39,8 @@ async function carregarLancamentosIniciais() {
     } catch (err) {
         console.error("Erro ao carregar lançamentos:", err);
         document.getElementById("lista-filmes").innerHTML = "<p>Erro ao carregar lançamentos.</p>";
+    } finally {
+        esconderSpinner();
     }
 }
 
@@ -76,25 +84,33 @@ export async function aplicarFiltroGenero(idGenero, pagina = 1) {
 }
 
 async function start() {
-    const lista = await carregarGeneros();
-    preencherSelectGeneros(filtroGenero, lista);
+    mostrarSpinner();
 
-    if (!document.getElementById("genero").querySelector('option[value=""]')) {
-        const opt = document.createElement("option");
-        opt.value = "";
-        opt.textContent = "Todos";
-        filtroGenero.insertBefore(opt, filtroGenero.firstChild);
+    try {
+        const lista = await carregarGeneros();
+        preencherSelectGeneros(filtroGenero, lista);
+
+        if (!document.getElementById("genero").querySelector('option[value=""]')) {
+            const opt = document.createElement("option");
+            opt.value = "";
+            opt.textContent = "Todos";
+            filtroGenero.insertBefore(opt, filtroGenero.firstChild);
+        }
+
+        filtroGenero.addEventListener("change", () => {
+            const id = filtroGenero.value;
+            aplicarFiltroGenero(id, 1);
+        });
+
+        configurarBusca();
+
+        await carregarLancamentosIniciais();
+    } catch (erro) {
+        console.error("Erro no start():", erro);
+        document.getElementById("lista-filmes").innerHTML = "<p>Erro ao inicializar.</p>";
+    } finally {
+        esconderSpinner();
     }
-
-    filtroGenero.addEventListener("change", () => {
-        const id = filtroGenero.value;
-        aplicarFiltroGenero(id, 1);
-    });
-
-    configurarBusca();
-
-    await carregarLancamentosIniciais();
 }
 
 start();
-
