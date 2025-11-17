@@ -254,3 +254,178 @@ body {
     max-height: 120px;
     overflow: hidden;
 }
+
+/* ================================
+   📱 RESPONSIVIDADE — MOBILE FIRST
+   ================================ */
+
+/* ----------- Telas até 480px (celulares pequenos) ----------- */
+@media (max-width: 480px) {
+
+    /* HEADER */
+    .header {
+        flex-direction: column;
+        text-align: center;
+        gap: 0.7rem;
+        padding: 12px 15px;
+    }
+
+    .branding img {
+        width: 110px;
+    }
+
+    .branding h1 {
+        font-size: 1.2rem;
+    }
+
+    .nav {
+        flex-wrap: wrap;
+        justify-content: center;
+        gap: 0.5rem;
+    }
+
+    .nav a {
+        font-size: 0.9rem;
+    }
+
+    /* FILTROS */
+    .filtros {
+        flex-direction: column;
+        align-items: stretch;
+        gap: 1rem;
+        padding: 1rem 1.2rem;
+    }
+
+    .input-row {
+        flex-direction: column;
+    }
+
+    .input-row input,
+    .input-row button {
+        width: 100%;
+    }
+
+    #genero {
+        width: 100%;
+    }
+
+    /* GRID DE FILMES */
+    #lista-filmes {
+        grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+        gap: 1rem;
+    }
+
+    .card-filme {
+        padding: 0.5rem;
+    }
+
+    .card-filme img {
+        border-radius: 6px;
+    }
+
+    /* PAGINAÇÃO */
+    #paginacao {
+        flex-direction: column;
+        gap: 0.6rem;
+    }
+
+    #paginacao button {
+        width: 100%;
+    }
+
+    /* DETALHES */
+    #detalhes-container {
+        padding: 1rem;
+        margin: 1rem;
+    }
+
+    .poster-detalhe {
+        width: 100%;
+        max-width: 250px;
+        display: block;
+        margin: 0 auto 1rem auto;
+    }
+
+    /* FOOTER */
+    .footer {
+        text-align: center;
+    }
+}
+
+
+/* ----------- Telas até 768px (celulares grandes e tablets) ----------- */
+@media (max-width: 768px) {
+
+    /* HEADER */
+    .header {
+        flex-direction: column;
+        text-align: center;
+        gap: 1rem;
+    }
+
+    .branding img {
+        width: 120px;
+    }
+
+    .branding h1 {
+        font-size: 1.4rem;
+    }
+
+    .nav {
+        justify-content: center;
+        gap: 1rem;
+    }
+
+    /* FILTROS */
+    .filtros {
+        flex-direction: column;
+        align-items: stretch;
+        gap: 1rem;
+    }
+
+    .input-row {
+        flex-direction: column;
+        gap: 0.7rem;
+    }
+
+    .input-row input,
+    .input-row button {
+        width: 100%;
+    }
+
+    #genero {
+        width: 100%;
+    }
+
+    /* GRID */
+    #lista-filmes {
+        grid-template-columns: repeat(auto-fill, minmax(170px, 1fr));
+    }
+
+    /* DETALHES */
+    #detalhes-container {
+        margin: 1.5rem;
+        padding: 1.5rem;
+    }
+
+    .poster-detalhe {
+        max-width: 220px;
+    }
+}
+
+
+/* ----------- Telas até 1024px (notebooks e tablets landscape) ----------- */
+@media (max-width: 1024px) {
+
+    .secao-catalogo {
+        padding: 0 1rem;
+    }
+
+    #lista-filmes {
+        grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+    }
+
+    #detalhes-container {
+        max-width: 750px;
+    }
+}

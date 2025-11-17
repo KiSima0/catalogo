@@ -11,8 +11,6 @@ body {
   background: #f0f0f0;
   color: #333;
   line-height: 1.5;
-  display: flex;
-  flex-direction: column;
 }
 
 .container {
@@ -67,6 +65,7 @@ body {
     color: #333;
     gap: 1rem;
     box-shadow: 0 2px 5px rgba(0, 0, 0.2);
+    flex-wrap: wrap;
 }
 
 .branding {
@@ -165,4 +164,159 @@ body {
   margin-top: 2rem;
   font-size: 0.9rem;
   color: #333;
+}
+
+/* ============================================
+   RESPONSIVIDADE — AJUSTES CORRETOS E SEMÂNTICOS
+   ============================================ */
+
+/* ---------- Telas até 768px (tablets e celulares grandes) ---------- */
+@media (max-width: 768px) {
+
+  .header {
+    flex-direction: column;
+    text-align: center;
+    gap: 0.8rem;
+    padding: 15px 20px;
+  }
+
+  .branding img {
+    width: 120px;
+  }
+
+  .branding h1 {
+    font-size: 1.35rem;
+  }
+
+  .nav {
+    justify-content: center;
+    gap: 0.8rem;
+    width: 100%;
+  }
+
+  .card-grid {
+    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+    padding: 1.5rem 0;
+    justify-items: center;
+  }
+}
+
+/* ---------- Telas até 600px ---------- */
+@media (max-width: 600px) {
+
+  .container {
+    padding: 0 12px;
+  }
+
+  .card-grid {
+    padding: 1.2rem 0;
+    justify-items: center;
+    width: 100%;
+  }
+
+  .card {
+    max-width: 300px;
+    width: 100%;
+    padding: 1.2rem;
+  }
+
+  .card img {
+    width: 100px;
+    height: 100px;
+  }
+}
+
+/* ---------- Telas até 480px (celulares pequenos) ---------- */
+@media (max-width: 480px) {
+
+  .header {
+    flex-direction: column;
+    gap: 0.7rem;
+    padding: 12px 15px;
+  }
+
+  .branding {
+    max-width: 100%;
+    overflow: hidden;
+  }
+
+  .branding img {
+    width: 100px;
+    max-width: 100%;
+  }
+
+  .branding h1 {
+    font-size: 1.1rem;
+  }
+
+  .nav {
+    margin-top: 0.5rem;
+    width: 100%;
+    justify-content: center;
+    flex-wrap: wrap;
+    overflow-x: hidden; /* Responsivo */
+  }
+
+  .nav a {
+    font-size: 0.9rem;
+  }
+
+  .card-grid {
+    grid-template-columns: 1fr;
+    gap: 1.2rem;
+    padding: 1.2rem 0;
+    width: 100%;
+    max-width: 100%;
+    justify-items: center;
+  }
+
+  .card {
+    width: 90%;
+    max-width: 350px;
+    padding: 1rem;
+  }
+
+  .card img {
+    width: 90px;
+    height: 90px;
+  }
+
+  .footer {
+    text-align: center;
+    padding: 1.5rem 1rem;
+  }
+}
+
+/* ---------- Telas muito pequenas (até 380px) ---------- */
+@media (max-width: 380px) {
+
+  .nav a {
+    font-size: 0.85rem;
+  }
+
+  .branding h1 {
+    font-size: 1rem;
+  }
+
+  .card {
+    padding: 0.9rem;
+    width: 95%;
+  }
+}
+
+/* ============================================
+   CORREÇÃO DE SCROLL — agora dentro da responsividade
+   ============================================ */
+@media (max-width: 480px) {
+  html, body {
+    overflow-x: hidden;
+  }
+
+  .container,
+  .container-maior,
+  .footer,
+  .nav {
+    overflow-x: hidden;
+    max-width: 100%;
+  }
 }

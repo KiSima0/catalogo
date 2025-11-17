@@ -64,6 +64,7 @@ body {
     color: #333;
     gap: 1rem;
     box-shadow: 0 2px 5px rgba(0, 0, 0.2);
+    flex-wrap: wrap;
 }
 
 .branding {
@@ -198,4 +199,51 @@ body {
   padding: 1rem;
   border-radius: 10px;
   margin-top: 2rem;
+}
+
+/* ==== RESPONSIVIDADE APLICADA (SEM ALTERAR O LAYOUT ORIGINAL) ==== */
+
+/* Ajustes do container principal */
+@media (max-width: 600px) {
+  .corpo-pag {
+    padding: 1.2rem 1rem;
+    margin: 1rem;
+    border-radius: 10px;
+  }
+
+  .corpo-pag h2 {
+    font-size: 1.3rem;
+    padding-left: 8px;
+  }
+
+  .corpo-pag p,
+  .corpo-pag ul li {
+    font-size: 1rem;
+  }
+
+  .container {
+    padding: 0 12px;
+  }
+}
+
+/* Telas bem pequenas */
+@media (max-width: 400px) {
+  .corpo-pag {
+    padding: 1rem;
+    margin: 0.8rem;
+  }
+
+  .nav {
+    width: 100%;
+    justify-content: center;
+    margin-top: 0.6rem;
+  }
+
+  .nav a {
+    font-size: 15px;
+  }
+
+  .corpo-pag h2 {
+    font-size: 1.15rem;
+  }
 }
